@@ -8,7 +8,7 @@ const getNotes = function(){
 }
 
 const addNote=function(title,body){
-
+    console.log('add note')
     //add a note
     //first load in the exisiting ones
 const notes= loadNotes();
@@ -44,7 +44,7 @@ console.log(notes);
 
 const saveNotes= function(notes){
 const dataJSON=JSON.stringify(notes)
-fs.appendFileSync('notes.json',dataJSON)
+fs.writeFileSync('notes.json',dataJSON)
 
 }
 
@@ -56,7 +56,8 @@ const loadNotes=function(){
     //use try catch to prevent error from file not existing
     try{
         const dataBuffer= fs.readFileSync('notes.json');
-        const dataJSON= dataBuffer.toJSON()
+        //ALWAYS TOSTRING NEVER TO JSON
+        const dataJSON= dataBuffer.toString()
         //return the object
         return  JSON.parse(dataJSON)
     
