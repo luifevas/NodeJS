@@ -69,12 +69,42 @@ const loadNotes=function(){
             return []
         }
 
+}
 
+
+const removeNote=function(title){
+        const notes=loadNotes();
+
+        const removedNotes=  notes.filter(
+
+            function(individualNote){
+                 if(individualNote.title!=title ){
+
+                    
+                    return true;
+
+
+                 }   else{
+                    const error= chalk.bold.green.inverse
+                    console.log(error('Note was removed'))
+                        return false;
+                 }
+               
+            }
+        )
+
+        if(notes.length==removedNotes.length){
+            const success= chalk.bold.red.inverse
+                    console.log(success('No note was found with that title'))
+
+        }
+        saveNotes(removedNotes)
 
 }
 module.exports= {
     //export various things
     getNotes: getNotes,
-    addNote: addNote
+    addNote: addNote,
+    removeNote: removeNote
 
 };
