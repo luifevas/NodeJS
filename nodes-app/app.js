@@ -85,7 +85,7 @@ builder : {
 
 },
 
-handler:  function(argv){
+handler(argv){
 
     //use function in notes.js to addNote
     
@@ -116,7 +116,7 @@ yargs.command({
     }
 
     },
-    handler:  function(argv){
+    handler  (argv){
     
         console.log('Remove a note')
         notes.removeNote(argv.title)
@@ -129,9 +129,10 @@ yargs.command({
     yargs.command({
         command: 'list',
         describe :'List the notes',
-        handler:  function(){
+        handler (){
         
-            console.log('Listing all notes')
+            console.log(chalk.magenta.inverse("Listing your Notes"));
+            notes.getNotes()
         
         }
         
@@ -141,10 +142,18 @@ yargs.command({
         yargs.command({
             command: 'read',
             describe :'Read a note',
-            handler:  function(){
+            builder: {
+                title :{
+                    describe:'Note title',
+                    //so its mandatory
+                    demandOption:true,
+                    //enforce argument Type
+                    type: 'string'
+            }},
+            handler(argv){
             
-                console.log('Reading a note')
-            
+               // console.log('Reading a note')
+                notes.readNote(argv.title)
             }
             
             })

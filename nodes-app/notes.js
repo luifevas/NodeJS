@@ -1,27 +1,32 @@
 console.log('notes.js')
 const chalk=require('chalk')
 const fs = require('fs')
-const getNotes = function(){
-
-    return "Your notes ..."
+const getNotes = ()=>{
+ const notes= loadNotes();
+    
+    notes.forEach(
+        (note)=> console.log(note.title)
+        
+        )
 
 }
 
-const addNote=function(title,body){
+const addNote=(title,body)=>{
     console.log('add note')
     //add a note
     //first load in the exisiting ones
 const notes= loadNotes();
 console.log(notes);
 //check if the title is already in use
-            const duplicateNotes= notes.filter(
-                function (individualNote){
-                console.log('here')
-                return individualNote.title===title;
+            /* const duplicateNotes= notes.filter(
+                (individualNote)=>individualNote.title===title
+            ); */
 
-            });
-
-   if(duplicateNotes.length==0){
+                //how to use find array method
+            const duplicateNote= notes.find((note)=>note.title===title)
+                //console.log(duplicateNote)
+                //if it does not find the element it is undefined, if it finds it  prints the array object
+   if(!duplicateNote){
 
     notes.push(
         {
@@ -42,13 +47,13 @@ console.log(notes);
 
 }
 
-const saveNotes= function(notes){
+const saveNotes= (notes)=>{
 const dataJSON=JSON.stringify(notes)
 fs.writeFileSync('notes.json',dataJSON)
 
 }
 
-const loadNotes=function(){
+const loadNotes=()=>{
         //load notes  for all functions
         //const error= chalk.bold.red.inverse
 
@@ -72,12 +77,12 @@ const loadNotes=function(){
 }
 
 
-const removeNote=function(title){
+const removeNote=(title)=>{
         const notes=loadNotes();
 
         const removedNotes=  notes.filter(
 
-            function(individualNote){
+            (individualNote) =>{
                  if(individualNote.title!=title ){
 
                     
@@ -90,7 +95,7 @@ const removeNote=function(title){
                         return false;
                  }
                
-            }
+                }
         )
 
         if(notes.length==removedNotes.length){
@@ -101,10 +106,27 @@ const removeNote=function(title){
         saveNotes(removedNotes)
 
 }
+
+    const readNote =(title)=>{
+
+        const notes = loadNotes()
+
+        const noteToRead= notes.find( (note)=>note.title===title)
+
+        if(noteToRead){
+            console.log(chalk.blue.inverse(noteToRead.title))
+            console.log(noteToRead.body)
+
+
+        } else{
+            const error= chalk.bold.red.inverse
+            console.log(error('No note was found with that title'))
+        }
+    }
 module.exports= {
     //export various things
     getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
-
+    removeNote: removeNote,
+    readNote:readNote
 };
