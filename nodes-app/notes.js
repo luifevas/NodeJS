@@ -24,6 +24,8 @@ console.log(notes);
 
                 //how to use find array method
             const duplicateNote= notes.find((note)=>note.title===title)
+                // to debug use node inspect to run
+           // debugger
                 //console.log(duplicateNote)
                 //if it does not find the element it is undefined, if it finds it  prints the array object
    if(!duplicateNote){
